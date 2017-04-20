@@ -1,0 +1,201 @@
+TCoolTrayIcon, ver. 2.2.2
+
+This is a component for placing icons in the notification area
+of the Windows taskbar (aka. the traybar).
+
+The component is freeware. Feel free to use and improve it. 
+I would be pleased to hear what you think. Personally I think 
+it's a pretty darn cool component  :-)
+
+Get the latest version from 
+http://members.xoom.com/troelsj/delphi.html
+
+
+Properties:
+
+- Hint: the tray icon's hint (max 64 chars).
+  NOTE: The time before the hint window closes is determined by 
+  Windows, so don't bother changing the interval yourself. 
+  You can't.
+
+- ShowHint: whether to show the hint.
+
+- Icon: the icon to display in the tray. This icon is 16x16 
+  pixels and max. 16 colors. If you use an icon file (*.ico) 
+  containing more than one icon, Delphi will use the first icon 
+  (if it's 32x32 it will be scaled down, which probably won't 
+  look good).
+  NOTE: Assigning a new TIcon object to Icon will cause the icon 
+  in the tray to redraw. However, this is not the case if you 
+  change Icon through the TIcon.Assign method, or change it 
+  through TIcon.Handle. In those cases you must use the method 
+  Refresh (see below) to redraw it.
+  
+- IconVisible: whether to display the icon. This property has 
+  no effect in design mode.
+
+- PopupMenu: the popup menu you want to display when the icon is 
+  clicked.
+
+- LeftPopup: do you want the popup menu to pop up when you click
+  the left mouse button? Default is false, meaning only the right
+  button will work.
+  NOTE: LeftPopup must be false (or the popup menu unassigned) if 
+  you want to double click the tray icon without displaying the 
+  popup menu. LeftPopup must be false if you want TCoolTrayIcon to 
+  handle a menu that has a default menu item.
+
+- StartMinimized: do you want the main form to be hidden when the
+  application starts up? Default is false.
+  NOTE: Remember to set the form's Visible property to false if 
+  StartMinimized is true.
+
+- Enabled: default true. Works like Enabled for other controls, 
+  enabling/disabling keyboard and mouse input. Useful when you 
+  want to temporarily disable the popup menu, say while you are 
+  displaying an about box or some other modal window.
+
+- IconList: an ImageList containing icons. If it contains other 
+  images than icons, the tray icon won't change when using 
+  CycleIcons, but no error occurs.
+  NOTE: when you assign to IconList IconIndex is set to 0.
+
+- IconIndex: the current icon in the assigned iconlist (or 0 if 
+  no iconlist is assigned).
+
+- CycleIcons: animate tray icon by cycling through all the icons 
+  stored in IconList and assigning them to Icon. When you set 
+  CycleIcons to true, it will begin with the first icon in 
+  IconList.
+  NOTE: CycleIcons can be true even though you have no IconList. 
+  No cycling will occur in that case, but the cycle timer is 
+  still active, which will consume some resources.
+
+- CycleInterval: the time interval in milisecs. before selecting 
+  a new icon from IconList.
+
+- DesignPreview: when true, enables you to preview the tray icon 
+  in design mode. You can watch what the icon looks like, see 
+  its hint, enable/disable it, test the popupmenu, and animate 
+  it via CycleIcons.
+  NOTE: Set DesignPreview to false to avoid the design time icon 
+  appearing when you run your program. This is only a problem in 
+  the Delphi IDE (not in the finished exe file). I couldn't find 
+  a way to kill the design icon in run-time, so you'll have to 
+  do it yourself.
+  NOTE: Setting DesignPreview in run-time has no effect.
+
+- MinimizeToTray: do you want to hide the main form instead of 
+  minimizing it? Default is false.
+
+- Handle: the tray icon's handle.
+
+
+Methods:
+
+- ShowMainForm, HideMainForm: show/hide the main form.
+
+- Refresh: redraw the tray icon. May be necessary when changing 
+  the icon, depending on how you do it (see above).
+
+
+Events:
+
+- OnClick, OnDblClick, OnMouseDown, OnMouseUp, OnMouseMove: 
+  work like the similar events for other controls.
+
+- OnCycle: fired just before the icon changes via CycleIcons.
+  Returns the current index in the assigned imagelist.
+
+
+Known bugs:
+
+- The OnMouseXXX events will only report the key status 
+  (TShiftStatus) correctly if the main form has focus. You can 
+  see this if you start the demo and then put another window in 
+  the foreground. Hold CTRL down, say, and move the mouse over 
+  the tray icon. The CTRL key is apparently ignored when the 
+  demo is not in the foreground. I don't know why; it's probably 
+  just the way Windows works.
+
+- A few people have experienced problems after changing the main 
+  form's BorderStyle property. This in fact recreates the form 
+  with a new handle. CoolTrayIcon would sometimes reference the 
+  old handle, thus cutting the new form out of the message loop.
+  This should be fixed by now, but let me know of any problems 
+  connected to the BorderStyle property.
+
+- Sometimes CoolTrayIcon just doesn't work under Win NT (Access 
+  error, if I remember). Please tell me if that is the case, and 
+  if so, which NT version you use.
+
+
+History:
+
+- ver. 2.2.2: When there was more than one form visible the 
+  taskbar icon would not hide when the main form was minimized.
+  Fixed.
+
+- ver. 2.2.1: Fixed a popup menu bug. Also fixed a bug which meant 
+  D2 and D3 users could not compile the component. Added more icon 
+  animations in the demo. Thanks to Daniele Gervasoni for the 
+  "tray graph".
+
+- ver. 2.2.0: IconIndex is now a property, allowing you to specify 
+  an icon at run-time. The OnCycle event is changed so it returns 
+  the index to the next icon that will display when cycling.
+  Finally, I fixed a bug that caused the taskbar icon not to 
+  display itself when MinimizeToTray was true. Thanks to Lorenz 
+  Graf for pointing it out to me.
+
+- ver. 2.1.4: The main form will no longer show itself untimely 
+  after the form's BorderStyle property is changed. Thanks to 
+  Thomas Reimann.
+
+- ver. 2.1.3: Fixed a bug that caused the main form not to 
+  display itself (how embarassing). 
+
+- ver. 2.1.2: I *finally* found the bug that would cause some 
+  compound controls (like controls on notebook pages or tab 
+  sheets) not to display properly when StartMinimized was true.
+  Incidently, this also means that TForm.Position now works.
+  Also fixed a minor bug that caused modal forms owned by the 
+  main form to appear behind the main form when the popup menu 
+  appeared (thanks to Arash Ramin).
+
+- ver. 2.1.1: Added notification method to properly detect whether 
+  the associated popup menu and imagelist are deleted. Thanks to 
+  Hui Jin Ong for pointing it out to me and making suggestions.
+
+- ver. 2.1.0: Added property MinimizeToTray. This was done by 
+  hooking into the application's message processing.
+
+- ver. 2.0.0: Name is now TCoolTrayIcon. Added icon cycling and 
+  design preview capabilities. Added method Refresh. Fixed a bug 
+  that caused some controls to not redraw when starting your app. 
+  as invisible.
+
+- ver. 1.0.3: Added property Enabled. Also fixed a bug reported by 
+  David Knaack, which caused a runtime error if you double-clicked 
+  when no popup menu was assigned to the icon.
+
+- ver. 1.0.2: Added a Handle property, and enabled handling of 
+  default menu items. (Partially) fixed a bug so the icon will 
+  update itself when a new icon is assigned.
+
+- ver. 1.0.1: The associated popup menu now behaves as it is 
+  supposed to. Also fixed that forms using the tray icon didn't 
+  go in front of other windows when restored. Thanks to Chris Hope 
+  for telling me.
+
+- ver. 1.0.0: First release. Component was called TTrayIcon at 
+  this time.
+
+
+
+If you have any comments or corrections, I would very much like to 
+hear them. If you develop some cool tray animations you want to 
+share, send them to me  :-)
+
+Troels Jakobsen
+tjak@get2net.dk

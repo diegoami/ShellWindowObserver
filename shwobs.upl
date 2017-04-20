@@ -1,0 +1,54 @@
+[DSP upload]
+File Name=shwobs.zip
+Replace File=shwobs.zip
+File Status=Freeware
+Full Source Included=Y
+Delphi 1.0x=N
+Delphi 2.0x=N
+Delphi 3.0x=Y
+Delphi 4.0x=Y
+Delphi 5.0x=Y
+Delphi 6.0x=Y
+C++ Builder 1.0x=N
+C++ Builder 3.0x=N
+C++ Builder 4.0x=N
+C++ Builder 5.0x=N
+Kylix=N
+Version=1.2
+count=6
+1=This component was born out of frustration, since I wasn't able
+2=to connect to an existing instance of Internet Explorer AND
+3=catch the events it fires.
+4=Using this component you can, and you can perform actions when a
+5=new instance is started or an existing instance moves to a new
+6=location.
+Note=Updated by Michel Hibout
+Additional info=HTML file ( extension htm )
+Category=Winsock & Internet
+Platform=
+Group=Component/Code
+
+[Versions available]
+Delphi 1.0x=
+Delphi 2.0x=
+Delphi 3.0x=
+Delphi 4.0x=
+Delphi 5.0x=
+Delphi 6.0x=
+C++ Builder 1.0x=
+C++ Builder 3.0x=
+C++ Builder 4.0x=
+C++ Builder 5.0x=
+Kylix=
+
+[DSP Support]
+DSP Support=Y
+
+[Uploader_1]
+Author name=Diego Amicabile
+Contact=Diego Amicabile
+Author E-mail=diegoami@yahoo.it
+Author URL=http://www.geocities.com/diegoami
+count=0
+Author Section=_Do Not Create Author Page!
+UpdateDSP=N

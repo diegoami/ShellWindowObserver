@@ -1,0 +1,74 @@
+<!DOCTYPE HTML public "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>Untitled</TITLE>
+
+</HEAD>
+<BODY>
+<H1>TSHELLWINDOWOBSERVER</H1>
+
+<p>This component was born out of frustration, since I wasn't able to connect to an existing instance of Internet Explorer AND catch the events it fires. There must be a better way to do it, let me know if you have figured it out. I use timers.</p>
+
+<H2>EXCEPTIONS </H2>
+<CODE>EIdNotFound = class(Exception);</CODE>
+<H2>TSHELLMESSAGE</H2>
+<p><code>TSHELLMESSAGE = (smClose,smMaximize,smMinimize,smRestore);</code></p>
+<H2>TSHELLWINDOW </H2>
+<pre>
+  TShellWindow = class
+    Num : integer;
+    handle : HWND;
+    LocationURL : String;
+    LocationName : String;
+    IEHandle : IWebBrowser2;
+  end;
+</pre>
+<H2>PROCEDURE TYPES</H2>
+<br><CODE>
+TOnAddedEntry = procedure (Sender : TObject; ShellWindow : TShellWindow; Str : String) of object;</CODE><br> <I>Fired whenever an existing instance of Internet Explorer moves to another URL, or when a new instance is opened. <code>Str</code> is in the form <br>
+<code>ID:URL:TITLE:TIME</CODE>, and it is added at the end of the <code>LoggedChanges</code> Property, and the delimiter, in this example :, is set through the <code>Delimiter</code> Property</i><bR>
+<br><bR> 
+<CODE>TOnChangedNumber = procedure (Sender : TObject; Number : Integer) of object; <br><i>Fired whenever an instance of Internet Explorer is closed or opened. <code>Number</code> is the current number of opened instances</i>
+</CODE>
+
+<H2>TSHELLWINDOWOBSERVER</H2>
+
+<H3>Properties </H3>
+<ul>
+<li><CODE>LoggingDirs : Boolean </CODE><br> Whether local surfing is logged
+<li><CODE>Delimiter : Char</CODE>
+<li><CODE>Active : boolean</CODE>
+<li><CODE>LoggedChanges (runtime) : TStrings</CODE> <br> contains a log about all events of Internet Explorer since the component was started
+<li><CODE>WindowList : TList (runtime)  </CODE> Contains a list of active
+  TShellWindow(s)
+<li><CODE>Count : Integer </CODE>Number of active instance of explorer
+<li><CODE>SendAMessage : TShellMessage = </CODE>Allow you to choose the type of message you
+  send at the choosen instance <br> 
+</ul>
+
+<H3>Methods </H3>
+
+<code>function GetShellWindowOnId(Id : integer) : TShellWindow;</code>
+
+<p><CODE>function SendMessageToWindowByNumber(Num: Integer): LRESULT;</CODE></p>
+<p>&nbsp;&nbsp;&nbsp; Allow you to send a choosen message at an explorer's
+instance by th Num parameter. Return the result of&nbsp; sending. For more
+information see Help for the return of SendMessage function API.</p>
+
+<H3>Events </H3>
+
+<CODE>
+OnAddedEntry : TOnAddedEntry;<br>
+OnChangedNumber : TOnChangedNumber;
+</CODE>
+<br>
+<hr>
+<i>Created by Diego Amicabile</i><br>
+<i>diegoami@yahoo.it</i>
+
+<hr>
+<i>Updated by Michel Hibon</i><br>
+<i>mhibon@ifrance.com</i>
+
+</BODY>
+</HTML>
